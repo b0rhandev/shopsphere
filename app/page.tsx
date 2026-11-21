@@ -3,6 +3,7 @@ import Link from "next/link";
 import { imageAssets } from "./data/images";
 import { ProductResults, ProductSearchProvider } from "./components/home/ProductSearch";
 import HeroCarousel from "./components/home/HeroCarousel";
+import ShippingInfoButton from "./components/home/ShippingInfoButton";
 import { StoreActions } from "./components/store/StoreActions";
 import LiveSearch from "./components/LiveSearch";
 import ThemeToggle from "./components/ThemeToggle";
@@ -61,18 +62,18 @@ function Icon({ name, className = "size-5" }: { name: IconName; className?: stri
 function Header() {
   return (
     <header className="border-b border-gray-100 bg-white" dir="rtl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-4 py-4 sm:px-6">
-        <Link aria-label="ShopSphere صفحه اصلی" className="flex shrink-0 items-center gap-2 text-xl font-black text-gray-900" href="/">
-          <span className="grid size-10 place-items-center rounded-xl bg-purple-100 text-purple-700">
-            <Icon name="bag" className="size-6" />
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-4 sm:gap-5 sm:px-6">
+        <Link aria-label="ShopSphere صفحه اصلی" className="flex shrink-0 items-center gap-1 text-lg font-black text-gray-900 sm:gap-2 sm:text-xl" href="/">
+          <span className="grid size-9 place-items-center rounded-xl bg-purple-100 text-purple-700 sm:size-10">
+            <Icon name="bag" className="size-5 sm:size-6" />
           </span>
           <span>Shop<span className="text-purple-700">Sphere</span></span>
         </Link>
         <LiveSearch className="hidden max-w-xl flex-1 md:block" />
-        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
-          <ThemeToggle />
+        <div className="flex shrink-0 items-center gap-1 sm:gap-4">
+          <div className="hidden sm:block"><ThemeToggle /></div>
           <StoreActions />
-          <details className="group relative">
+          <details className="group relative hidden sm:block">
             <summary className="flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-gray-700 sm:text-sm">
               <span className="sm:hidden">حساب</span><span className="hidden sm:inline">حساب کاربری</span><Icon name="chevron" className="size-4" />
             </summary>
@@ -91,10 +92,12 @@ function Header() {
           <Link className="shrink-0 transition hover:text-purple-700" href="/">پیشنهاد ویژه</Link>
           <Link className="shrink-0 transition hover:text-purple-700" href="/about">درباره ما</Link>
           <Link className="shrink-0 transition hover:text-purple-700" href="/contact">تماس با ما</Link>
+          <Link className="shrink-0 transition hover:text-purple-700 sm:hidden" href="/admin">پنل مدیریت</Link>
         </div>
       </nav>
-      <div className="px-4 pb-3 sm:px-6 md:hidden">
-        <LiveSearch className="w-full" />
+      <div className="flex items-center gap-2 px-4 pb-3 sm:px-6 md:hidden">
+        <LiveSearch className="min-w-0 flex-1" />
+        <ThemeToggle />
       </div>
     </header>
   );
@@ -175,7 +178,7 @@ function CategoryGrid() {
           دیدن محصولات <Icon name="arrow" className="size-4" />
         </Link>
       </div>
-      <div className="grid auto-rows-[150px] grid-cols-2 gap-3 sm:auto-rows-[170px] sm:grid-cols-3 lg:auto-rows-[180px] lg:grid-cols-4 lg:gap-4">
+      <div className="grid auto-rows-[minmax(150px,auto)] grid-cols-2 gap-4 sm:auto-rows-[minmax(170px,auto)] sm:grid-cols-3 lg:auto-rows-[minmax(180px,auto)] lg:grid-cols-4 lg:gap-5">
         <CategoryCard category={featuredCategory} featured />
         {otherCategories.map((category) => <CategoryCard key={category.id} category={category} />)}
         <Link
@@ -212,9 +215,7 @@ function SpecialOffers() {
             <p className="text-xs font-bold text-purple-700">هدیه شاپ‌اسفیر</p>
             <h3 className="mt-1 text-xl font-black leading-relaxed text-gray-900">ارسال رایگان</h3>
             <p className="text-xs font-medium leading-5 text-gray-700">برای سفارش‌های بالای ۱ میلیون تومان</p>
-            <Link className="mt-3 inline-flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1.5 text-[11px] font-bold text-white transition hover:bg-purple-700" href="/shipping">
-              اطلاعات بیشتر <Icon name="arrow" className="size-3.5" />
-            </Link>
+            <ShippingInfoButton />
           </div>
           <div aria-hidden="true" className="absolute bottom-1 left-2 text-purple-300/90">
             <svg className="size-16" fill="none" viewBox="0 0 64 48">

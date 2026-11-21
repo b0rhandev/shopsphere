@@ -84,12 +84,12 @@ function ProductCard({ product }: { product: Product }) {
         <p className="text-[10px] font-semibold text-purple-600">{product.category}</p>
         <h3 className="mt-1 min-h-10 text-sm font-semibold leading-6 text-gray-800">{product.name}</h3>
       </Link>
-      <div className="mt-2 flex items-center justify-between gap-2">
-        <Link aria-label={`مشاهده قیمت و جزئیات ${product.name}`} href={productHref}>
-          <p className="text-[10px] text-gray-400 line-through">{product.oldPrice.toLocaleString("fa-IR")} تومان</p>
-          <p className="mt-0.5 whitespace-nowrap text-xs font-bold text-purple-800 sm:text-sm">{product.price.toLocaleString("fa-IR")} تومان</p>
+      <div className="mt-2 flex min-w-0 flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <Link aria-label={`مشاهده قیمت و جزئیات ${product.name}`} className="min-w-0" href={productHref}>
+          <p className="break-words text-[10px] leading-4 text-gray-400 line-through">{product.oldPrice.toLocaleString("fa-IR")} تومان</p>
+          <p className="mt-0.5 break-words text-xs font-bold leading-5 text-purple-800 sm:whitespace-nowrap sm:text-sm">{product.price.toLocaleString("fa-IR")} تومان</p>
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2">
           <button
             aria-label={favorite ? `حذف ${product.name} از علاقه‌مندی‌ها` : `افزودن ${product.name} به علاقه‌مندی‌ها`}
             aria-pressed={favorite}
@@ -127,7 +127,7 @@ export function ProductResults() {
         </p>
       )}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
           {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       ) : (
