@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { imageAssets } from "./data/images";
-import { ProductResults, ProductSearchProvider } from "./components/home/ProductSearch";
+import {
+  AllProductsLink,
+  CategoryFilterLink,
+  ProductResults,
+  ProductSearchProvider,
+} from "./components/home/ProductSearch";
 import HeroCarousel from "./components/home/HeroCarousel";
 import ShippingInfoButton from "./components/home/ShippingInfoButton";
 import { StoreActions } from "./components/store/StoreActions";
@@ -88,8 +93,8 @@ function Header() {
       <nav aria-label="منوی اصلی" className="border-t border-gray-100">
         <div className="mx-auto flex max-w-7xl items-center gap-7 overflow-x-auto px-4 py-3 text-sm text-gray-600 sm:px-6">
           <Link className="shrink-0 border-b-2 border-purple-600 pb-1 font-semibold text-purple-700" href="/">صفحه اصلی</Link>
-          <Link className="shrink-0 transition hover:text-purple-700" href="/">دسته‌بندی‌ها</Link>
-          <Link className="shrink-0 transition hover:text-purple-700" href="/">پیشنهاد ویژه</Link>
+          <Link className="shrink-0 transition hover:text-purple-700" href="#categories">دسته‌بندی‌ها</Link>
+          <Link className="shrink-0 transition hover:text-purple-700" href="#offers">پیشنهاد ویژه</Link>
           <Link className="shrink-0 transition hover:text-purple-700" href="/about">درباره ما</Link>
           <Link className="shrink-0 transition hover:text-purple-700" href="/contact">تماس با ما</Link>
           <Link className="shrink-0 transition hover:text-purple-700 sm:hidden" href="/admin">پنل مدیریت</Link>
@@ -105,11 +110,11 @@ function Header() {
 
 function CategoryCard({ category, featured = false }: { category: Category; featured?: boolean }) {
   return (
-    <Link
+    <CategoryFilterLink
+      category={category.name}
       className={`group relative isolate flex min-h-36 overflow-hidden rounded-2xl bg-gray-900 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg ${
         featured ? "col-span-2 min-h-64 sm:min-h-72 lg:row-span-2" : ""
       }`}
-      href="#offers"
     >
       <Image
         alt={category.imageAlt}
@@ -152,7 +157,7 @@ function CategoryCard({ category, featured = false }: { category: Category; feat
       {!featured && (
         <span className="absolute right-3 top-3 size-1.5 rounded-full bg-purple-300 shadow-[0_0_12px_rgba(216,180,254,0.9)]" />
       )}
-    </Link>
+    </CategoryFilterLink>
   );
 }
 
@@ -165,7 +170,7 @@ function CategoryGrid() {
   }
 
   return (
-    <section aria-label="دسته‌بندی محصولات" className="py-8 sm:py-10" dir="rtl">
+    <section aria-label="دسته‌بندی محصولات" className="scroll-mt-6 py-8 sm:py-10" dir="rtl" id="categories">
       <div className="mb-5 flex items-end justify-between gap-4 sm:mb-6">
         <div>
           <p className="mb-2 flex items-center gap-2 text-xs font-bold text-purple-700 sm:text-sm">
@@ -174,16 +179,15 @@ function CategoryGrid() {
           </p>
           <h2 className="text-2xl font-black text-gray-950 sm:text-3xl">از کجا شروع کنیم؟</h2>
         </div>
-        <Link className="mb-1 inline-flex shrink-0 items-center gap-1 text-xs font-bold text-purple-700 transition hover:gap-2 sm:text-sm" href="#offers">
+        <AllProductsLink className="mb-1 inline-flex shrink-0 items-center gap-1 text-xs font-bold text-purple-700 transition hover:gap-2 sm:text-sm">
           دیدن محصولات <Icon name="arrow" className="size-4" />
-        </Link>
+        </AllProductsLink>
       </div>
       <div className="grid auto-rows-[minmax(150px,auto)] grid-cols-2 gap-4 sm:auto-rows-[minmax(170px,auto)] sm:grid-cols-3 lg:auto-rows-[minmax(180px,auto)] lg:grid-cols-4 lg:gap-5">
         <CategoryCard category={featuredCategory} featured />
         {otherCategories.map((category) => <CategoryCard key={category.id} category={category} />)}
-        <Link
+        <AllProductsLink
           className="group flex min-h-36 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-purple-200 bg-purple-50/70 p-4 text-center text-purple-800 transition hover:border-purple-400 hover:bg-purple-100"
-          href="#offers"
         >
           <span className="grid size-11 place-items-center rounded-full bg-white text-purple-700 shadow-sm transition group-hover:scale-110">
             <Icon name="grid" className="size-5" />
@@ -193,7 +197,7 @@ function CategoryGrid() {
             <span className="mt-1 block text-[11px] text-purple-600">پیشنهادهای منتخب را ببین</span>
           </span>
           <Icon name="arrow" className="size-4 transition group-hover:-translate-x-1" />
-        </Link>
+        </AllProductsLink>
       </div>
     </section>
   );
@@ -204,9 +208,9 @@ function SpecialOffers() {
     <section aria-labelledby="offers-title" className="pb-12" dir="rtl" id="offers">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-xl font-black text-gray-900 sm:text-2xl" id="offers-title">پیشنهاد شگفت‌انگیز</h2>
-        <Link className="inline-flex items-center gap-1 text-xs font-semibold text-purple-700 transition hover:text-purple-900 sm:text-sm" href="/offers">
+        <AllProductsLink className="inline-flex items-center gap-1 text-xs font-semibold text-purple-700 transition hover:text-purple-900 sm:text-sm">
           مشاهده همه <Icon name="arrow" className="size-4" />
-        </Link>
+        </AllProductsLink>
       </div>
       <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
         <ProductResults />

@@ -62,6 +62,40 @@ export function useStoreSearch() {
   return context;
 }
 
+export function CategoryFilterLink({
+  category,
+  children,
+  className,
+}: {
+  category: string;
+  children: ReactNode;
+  className: string;
+}) {
+  const { setQuery } = useStoreSearch();
+
+  return (
+    <Link className={className} href="#offers" onClick={() => setQuery(category)}>
+      {children}
+    </Link>
+  );
+}
+
+export function AllProductsLink({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className: string;
+}) {
+  const { setQuery } = useStoreSearch();
+
+  return (
+    <Link className={className} href="#offers" onClick={() => setQuery("")}>
+      {children}
+    </Link>
+  );
+}
+
 function ProductCard({ product }: { product: Product }) {
   const { addToCart, toggleWishlist, isInWishlist } = useShopContext();
   const favorite = isInWishlist(product.id);
